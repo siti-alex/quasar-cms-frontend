@@ -3,6 +3,7 @@
     <div id="body" style="width: 100%; padding-top: 5%">
       <q-editor
         v-model="html"
+        ref="editorRef"
         :dense="$q.screen.lt.md"
         :toolbar="[
         [
@@ -127,7 +128,8 @@ export default {
       console.log(html);
     },
     imgTest() {
-      console.log('Я сработал');
+      this.$refs.editorRef.runCmd('insertHTML', `<span>Дарова, ёпта</span>`)
+      this.$refs.editorRef.focus();
     },
   },
   created() {
