@@ -17,6 +17,7 @@
         ['bold', 'italic', 'strike', 'underline', 'subscript', 'superscript'],
         ['token', 'hr', 'link', 'custom_btn'],
         ['fullscreen'],
+        ['img','video','file'],
         [
           {
             label: $q.lang.editor.formatting,
@@ -83,6 +84,26 @@
         times_new_roman: 'Times New Roman',
         verdana: 'Verdana'
       }"
+      :definitions="{
+          img: {
+            tip: 'Вставить изображение',
+            icon: 'image',
+            label: '',
+            handler: imgTest
+          },
+          video: {
+            tip: 'Вставить видео',
+            icon: 'videocam',
+            label: '',
+            handler: '',
+          },
+          file: {
+            tip: 'Вставить файл',
+            icon: 'attach_file',
+            label: '',
+            handler: ''
+          },
+      }"
       height="80vh"/>
     </div>
   </q-page>
@@ -104,7 +125,10 @@ export default {
     getHtml(html){
       this.html = html.htmlCode;
       console.log(html);
-    }
+    },
+    imgTest() {
+      console.log('Я сработал');
+    },
   },
   created() {
   }

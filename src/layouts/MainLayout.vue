@@ -36,7 +36,6 @@
     </q-drawer>
 
     <q-page-container>
-<!--      <router-view />-->
         <cms-page ref="cms-page"/>
     </q-page-container>
   </q-layout>
