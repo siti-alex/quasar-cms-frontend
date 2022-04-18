@@ -4,7 +4,7 @@
       <q-editor
         id="editor"
         ref="editorRef"
-        @drop.prevent="evt => test(evt)"
+        @drop.prevent.stop="evt => dropImage(evt)"
         v-model="html"
         :dense="$q.screen.lt.md"
         :toolbar="[
@@ -132,9 +132,13 @@ export default {
     imgTest() {
       this.$refs['editorRef'].focus();
     },
-    test(test){
-      console.log(test.dataTransfer.files[0]);
-      this.imgPreview(test.dataTransfer.files[0]);
+    dropImage(image){
+      console.log(image);
+      let mult = image.dataTransfer.files;
+      Object.values(mult).forEach(element => {
+        this.imgPreview(element);
+      })
+      // this.imgPreview(image.dataTransfer.files[0]);
     },
     imgPreview(img){
       if(img) {
