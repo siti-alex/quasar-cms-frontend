@@ -2,6 +2,9 @@
   <q-page class="flex flex-center">
     <div id="body" style="width: 100%; padding-top: 5%">
       <q-editor
+        id="editor"
+        ref="editorRef"
+        @drop.prevent="evt => test(evt)"
         v-model="html"
         :dense="$q.screen.lt.md"
         :toolbar="[
@@ -127,10 +130,23 @@ export default {
       console.log(html);
     },
     imgTest() {
-      console.log('Я сработал');
+      this.$refs['editorRef'].focus();
+    },
+    test(test){
+      console.log(test.dataTransfer.files[0]);
+      this.imgPreview(test.dataTransfer.files[0]);
+    },
+    imgPreview(img){
+      if(img) {
+        const file = img;
+        let imgPrev = URL.createObjectURL(file);
+        this.$refs['editorRef'].runCmd('insertHTML', `<img width="160px" src="${imgPrev}"/>`)
+        this.$refs['editorRef'].focus()
+      }
     },
   },
   created() {
+
   }
 }
 </script>
