@@ -1,6 +1,7 @@
 <template>
   <q-page class="flex flex-center">
     <div id="body" style="width: 100%; padding-top: 5%">
+      <q-slider v-model="imgSize" :min="160" :max="1080" @update:model-value="imgTest" style="padding: 20px"/>
       <q-editor
         id="editor"
         ref="editorRef"
@@ -122,6 +123,7 @@ export default {
   data() {
     return {
       html: 'What you see is <b>what</b> you get.',
+      imgSize: 160,
     }
   },
   methods: {
@@ -130,7 +132,22 @@ export default {
       console.log(html);
     },
     imgTest() {
-      this.$refs['editorRef'].focus();
+      // console.log(document.getElementById('editor'));
+      let localStore = localStorage.getItem('img');
+      let selectorImg = document.querySelectorAll('img');
+      // console.log(localStorage.getItem('img'))
+
+      // console.log(localStore);
+      selectorImg.forEach(item => {
+        // console.log(item.width)
+        // console.log(localStore)
+        if(localStore == JSON.stringify(item.currentSrc)){
+          item.width = this.imgSize;
+          item.height = this.imgSize;
+        }
+        // else console.log('Нет');
+
+      })
     },
     dropImage(image){
       console.log(image);
@@ -144,7 +161,8 @@ export default {
       if(img) {
         const file = img;
         let imgPrev = URL.createObjectURL(file);
-        this.$refs['editorRef'].runCmd('insertHTML', `<img width="160px" src="${imgPrev}"/>`)
+        this.$refs['editorRef'].runCmd('insertHTML', `<img width="160px" height="160px" id="img" onclick="console.log(localStorage.setItem('img',JSON.stringify(this.src)))" src="${imgPrev}"/>`)
+        // this.$refs['editorRef'].runCmd('enableObjectResizing', "true")
         this.$refs['editorRef'].focus()
       }
     },
