@@ -138,14 +138,15 @@ export default {
     imgTest() {
       // console.log(document.getElementById('editor'));
       this.imgBuffer = localStorage.getItem('img');
-      let localStore = localStorage.getItem('img');
+      // let localStore = localStorage.getItem('img');
       // let localStore = this.imgBuffer;
-      let selectorImg = document.querySelectorAll('img');
-      let selectorImgTest = document.querySelector('img');
+      // let selectorImg = document.querySelectorAll('img');
+      // console.log(this.imgBuffer);
+      let selectorImgTest = document.querySelector(`[id=${this.imgBuffer}]`);
       selectorImgTest.width = this.imgSize;
+      // console.log(selectorImgTest);
       // console.log(localStorage.getItem('img'))
 
-      // console.log("Выполнился");
       // selectorImg.forEach(item => {
       //   // console.log(item.width)
       //   // console.log(localStore)
@@ -169,7 +170,10 @@ export default {
       if(img) {
         const file = img;
         let imgPrev = URL.createObjectURL(file);
-        this.$refs['editorRef'].runCmd('insertHTML', `<img width="160px" height="auto" id="${imgPrev}" onclick="localStorage.setItem('img',JSON.stringify(this.src))" src="${imgPrev}"/>`)
+        let imgId = imgPrev.split('/');
+        imgId = 'i'+imgId[imgId.length-1];
+        console.log(imgId);
+        this.$refs['editorRef'].runCmd('insertHTML', `<img width="160px" height="auto" id="${imgId}" onclick="localStorage.setItem('img',JSON.stringify(this.id))" src="${imgPrev}"/>`)
         this.$refs['editorRef'].focus()
         // this.$refs['editorRef'].runCmd('enableObjectResizing', "true")
 
