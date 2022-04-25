@@ -93,9 +93,8 @@ export default defineComponent({
     }
   },
   created() {
+
     // this.authorization(this.auth);
-    // api.getData
-    this.authorization(this.auth);
   }
 })
 </script>

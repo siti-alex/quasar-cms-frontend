@@ -88,7 +88,7 @@ export default {
     // }
   },
   created () {
-    this.getSections();
+    // this.getSections();
   }
 }
 </script>

@@ -124,30 +124,38 @@ export default {
     return {
       html: 'What you see is <b>what</b> you get.',
       imgSize: 160,
+      imgBuffer: null,
     }
   },
   methods: {
+    test(){
+      console.log('Локал стораге изменился');
+    },
     getHtml(html){
       this.html = html.htmlCode;
       console.log(html);
     },
     imgTest() {
       // console.log(document.getElementById('editor'));
+      this.imgBuffer = localStorage.getItem('img');
       let localStore = localStorage.getItem('img');
+      // let localStore = this.imgBuffer;
       let selectorImg = document.querySelectorAll('img');
+      let selectorImgTest = document.querySelector('img');
+      selectorImgTest.width = this.imgSize;
       // console.log(localStorage.getItem('img'))
 
-      // console.log(localStore);
-      selectorImg.forEach(item => {
-        // console.log(item.width)
-        // console.log(localStore)
-        if(localStore == JSON.stringify(item.currentSrc)){
-          item.width = this.imgSize;
-          item.height = this.imgSize;
-        }
-        // else console.log('Нет');
-
-      })
+      // console.log("Выполнился");
+      // selectorImg.forEach(item => {
+      //   // console.log(item.width)
+      //   // console.log(localStore)
+      //   if(localStore == JSON.stringify(item.currentSrc)){
+      //     item.width = this.imgSize;
+      //     // item.height = this.imgSize;
+      //   }
+      //   // else console.log('Нет');
+      //
+      // })
     },
     dropImage(image){
       console.log(image);
@@ -161,14 +169,24 @@ export default {
       if(img) {
         const file = img;
         let imgPrev = URL.createObjectURL(file);
-        this.$refs['editorRef'].runCmd('insertHTML', `<img width="160px" height="160px" id="img" onclick="console.log(localStorage.setItem('img',JSON.stringify(this.src)))" src="${imgPrev}"/>`)
-        // this.$refs['editorRef'].runCmd('enableObjectResizing', "true")
+        this.$refs['editorRef'].runCmd('insertHTML', `<img width="160px" height="auto" id="${imgPrev}" onclick="localStorage.setItem('img',JSON.stringify(this.src))" src="${imgPrev}"/>`)
         this.$refs['editorRef'].focus()
+        // this.$refs['editorRef'].runCmd('enableObjectResizing', "true")
+
       }
     },
   },
   created() {
+    localStorage.removeItem('img');
+    this.imgBuffer = localStorage.getItem('img');
+  },
 
+
+  watch: {
+    imgBuffer() {
+      console.log('aaa')
+      if(!localStorage.img) console.log('Я полон');
+    },
   }
 }
 </script>
